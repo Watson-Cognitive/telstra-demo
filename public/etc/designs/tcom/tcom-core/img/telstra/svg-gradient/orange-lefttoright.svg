@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1 1" preserveAspectRatio="none">
+<linearGradient id="g488" gradientUnits="userSpaceOnUse" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop stop-color="#e20070" offset="0"/><stop stop-color="#ff8700" offset="1"/>
+</linearGradient>
+<rect x="0" y="0" width="1" height="1" fill="url(#g488)" />
+</svg>
+<!--
+#E20070
+@tcom-orange-light: #ff8700;
+-->
