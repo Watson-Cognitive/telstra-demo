@@ -10,11 +10,12 @@
   <link rel="shortcut icon" href="/etc/designs/tcom/tcom-core/img/telstra/favicon-base-orange.ico">
   <link rel="stylesheet" href="css/chat/app.css"/>
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine"/>
   <link rel="stylesheet" href="css/reset.css" type="text/css" />
   <link rel="stylesheet" href="css/styles.css" type="text/css" />
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="css/style_sort.css" type="text/css" />
-  <link rel="stylesheet" href="css/main.css" type="text/css" />
   <script type="text/javascript" src="js/slider.js"></script>
   <script type="text/javascript" src="js/superfish.js"></script>
   <script type="text/javascript" src="js/custom.js"></script>
@@ -25,44 +26,32 @@
     <div id="body" class="width" style="min-height: 650px;">
           <div class="responsive-columns-wrapper" style="height: 550px;background-image: url('../images/DowBg.png');background-repeat:no-repeat;">
             <div id ="chbbldiv" class="circleBase type1">
-                <img id="chat-bubble" src="/images/chat_anim.gif" style="padding-top: 16px;cursor:pointer;"></img>
+              <img id="chat-bubble" src="/images/chat_anim.gif" style="padding-top: 16px;cursor:pointer;"></img>
             </div>
             <div id="supportText" class="type2">24x7 Chat Support</div>
-            <div id="chat-container" class="chat-container" style="display:none">
-                <div class="chat-window">
-                  <div class="chat-header">
-                    <img src="images/Robot.png" class="bot-img" />
-                    <div class="chat-header-main">
-                      <span class="title">$martAssist</span>
-                      <span id="closeBtn" class="tools">
-                        <a href="#"><span class="tool-close">X</span></a>
-                      </span>
-                    </div>
-                  </div>
-                  <div id="chat-body" class="chat-body">
-                    <ul class="chats">
-                      <div id="scrollingChat">
-                      </div>
-                    </ul>
-                  </div>
-                  <div class="chat-footer">
-                    <table>
-                      <tr>
-                        <td style="width:12%;"><img id="micButton" class="micButton" src="images/chat/mic_small.png" alt="Mic"></td>
-                        <td>
-                          <div class="typearea">
-                            <label for="textInput" class="inputOutline">
-                              <input id="textInput" 
-                                placeholder="Click on mic to speak or type here" type="text"
-                                onkeydown="ConversationPanel.inputKeyDown(event, this)">
-                            </label>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
+            <div id="chatMainColumn" class="hid-box" style="left: 70%;position: relative;display:none;height:75%">
+                <img id="chatName" src="/images/chat_name.png" class="chatName"></img>
+              <img id="closeButton" src="/images/close.png" class="closeButton"></img>
+              <div class="chat-column">
+                <div id="scrollingChat"></div>
+                <div>
+                  <table class="w3-table">
+                    <col width="15%" />
+                    <col width="85%" />
+                    <tr>
+                      <td><img id="micButton" class="micButton" src="images/chat/mic_small.png" alt="Mic" style="width:100%"></td>
+                      <td>
+                        <label for="textInput" class="inputOutline">
+                          <input id="textInput" class="input responsive-column"
+                            placeholder="Click on mic to speak or type" type="text"
+                            onkeydown="ConversationPanel.inputKeyDown(event, this)">
+                        </label>
+                      </td>
+                    </tr>
+                  </table>        
                 </div>
               </div>
+            </div>
             <div id="payload-column" class="fixed-column content-column" style="display:none">
               <div id="payload-initial-message">
                 Type something to see the output
@@ -113,19 +102,30 @@
     });
 
     $('#supportText').click(function(){
-      show();
-    });
-
-    $('#closeBtn').click(function(){
       hide();
     });
 
-    function show(){
-      $('#chat-container').toggle();
-    }
+    $('#closeButton').click(function(){
+      show();
+    });
 
     function hide(){
-      $('#chat-container').toggle();
+      $('#chatMainColumn').toggle();
+      $('#chatMainColumn').css("top","281px");
+      setTimeout(function() {
+        $('#textInput').focus();
+      },1000);
+      $('#chbbldiv').hide();
+      $('#supportText').hide();
+    }
+
+    function show(){
+      $('#chatMainColumn').css("top","150%");
+      setTimeout(function() {
+        $('#chatMainColumn').toggle();
+        $('#chbbldiv').show();
+        $('#supportText').show();
+      },800);
     }
     
  });

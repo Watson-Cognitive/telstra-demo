@@ -76,8 +76,6 @@ var ConversationPanel = (function() {
       if (input.value === '') {
         // If the input box is empty, remove the underline
         input.classList.remove('underline');
-        input.setAttribute('style', 'width:' + '100%');
-        input.style.width = '100%';
       } else {
         // otherwise, adjust the dummy text to match, and then set the width of
         // the visible input box to match it (thus extending the underline)
@@ -164,26 +162,32 @@ var ConversationPanel = (function() {
 
     textArray.forEach(function(currentText) {
       if (currentText) {
-        var messageJson = {
-          // <div class='segments'>
-          'tagName': 'div',
-          'classNames': ['segments'],
-          'children': [{
-            // <div class='from-user/from-watson latest'>
-            'tagName': 'div',
-            'classNames': [(isUser ? 'from-user' : 'from-watson'), 'latest', ((messageArray.length === 0) ? 'top' : 'sub')],
+        var messageJson;
+        if(!isUser){
+          messageJson = {
+            'tagName': 'li',
+            'classNames': ['from-watson','bot','latest',((messageArray.length === 0) ?'top':'sub')],
             'children': [{
-              // <div class='message-inner'>
-              'tagName': 'div',
-              'classNames': ['message-inner'],
-              'children': [{
-                // <p>{messageText}</p>
+                'tagName': 'span',
+                'classNames': ['avatar-bot']
+              },{
                 'tagName': 'p',
                 'text': currentText
               }]
-            }]
-          }]
-        };
+          };
+        }else{
+          messageJson = {
+            'tagName': 'li',
+            'classNames': ['row-right','customer','latest',((messageArray.length === 0) ?'top':'sub')],
+            'children': [{
+                'tagName': 'span',
+                'classNames': ['avatar-customer']
+              },{
+                'tagName': 'p',
+                'text': currentText
+              }]
+          };
+        }
         messageArray.push(Common.buildDomElement(messageJson));
       }
     });
@@ -197,14 +201,8 @@ var ConversationPanel = (function() {
   //   This is done so that the "context" of the conversation is maintained in the view,
   //   even if the Watson message is long.
   function scrollToChatBottom() {
-    var scrollingChat = document.querySelector('#scrollingChat');
-
-    // Scroll to the latest message sent by the user
-    var scrollEl = scrollingChat.querySelector(settings.selectors.fromUser
-            + settings.selectors.latest);
-    if (scrollEl) {
-      scrollingChat.scrollTop = scrollEl.offsetTop;
-    }
+    var objDiv = document.getElementById("chat-body");
+    objDiv.scrollTop = objDiv.scrollHeight;
   }
 
   // Handles the submission of input
